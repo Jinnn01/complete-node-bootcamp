@@ -1,13 +1,17 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
+const slugify = require('slugify');
 const replaceTemplate = require('./modules/replaceTemplate');
 // if those data are the same or only need to loaded once, can use sync
+
 // product json API
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 // objectData is an array for all data in json
 const objectData = JSON.parse(data);
 
+const slugs = objectData.map(el => slugify(el.productName, { lower: true }));
+console.log(slugs);
 // load html template
 const overviewTemplate = fs.readFileSync(`${__dirname}/templates/Template_overview.html`, 'utf-8');
 const cardTemplate = fs.readFileSync(`${__dirname}/templates/Template_card.html`, 'utf-8');
